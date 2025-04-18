@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
-import { UserService } from "services/UserService";
 import { inject, injectable } from "tsyringe";
+import { ErrorCode } from "../common/enums";
+import { ApiResponse } from "../common/responses/ApiResponse";
 import { UserServiceImpl } from "../services/impl/user-service";
+import { UserService } from "../services/UserService";
 
 @injectable()
 export class UserController {
@@ -9,12 +11,20 @@ export class UserController {
     @inject(UserServiceImpl) private userService: UserService<string>
   ) {}
 
-  getUser = async (req: Request, res: Response): Promise<void> => {
+  getUser = async (req: Request, res: Response) => {
     const user = await this.userService.getUser(req.params.id);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      ApiResponse.error(
+        res,
+        ErrorCode.NOT_FOUND,
+        "User not found",
+        `No user found on ID: ${req.params.id}`,
+        404
+      );
+      // res.status(404).json({ message: "User not found" });
     } else {
-      res.json(user);
+      ApiResponse.success(res, user, "Success");
+      // res.json(user);
     }
   };
 
