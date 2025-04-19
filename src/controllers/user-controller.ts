@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
-import { ErrorCode } from "../common/enums";
-import { ApiResponse } from "../common/responses/ApiResponse";
+import { AppResponse } from "../common/AppResponse";
 import { UserServiceImpl } from "../services/impl/user-service";
 import { UserService } from "../services/UserService";
 
@@ -13,25 +12,13 @@ export class UserController {
 
   getUser = async (req: Request, res: Response) => {
     const user = await this.userService.getUser(req.params.id);
-    if (!user) {
-      ApiResponse.error(
-        res,
-        ErrorCode.NOT_FOUND,
-        "User not found",
-        `No user found on ID: ${req.params.id}`,
-        404
-      );
-      // res.status(404).json({ message: "User not found" });
-    } else {
-      ApiResponse.success(res, user, "Success");
-      // res.json(user);
-    }
+    AppResponse.success(res, user);
   };
 
-  createUser = async (req: Request, res: Response): Promise<void> => {
+  createUser = async (req: Request<string>, res: Response): Promise<void> => {
     const { id, name, email } = req.body;
-    // const user = new User<string>(id, name, email);
+    const user = new User<string>(id, name, email);
     // const created = await this.userService.registerUser(null);
-    res.status(201).json("created");
+    AppResponse.success(res, user, 201, "Created");
   };
 }
