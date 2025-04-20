@@ -1,4 +1,4 @@
-import { ErrorCode } from "common/enums";
+import { ErrorCode } from "@/common/enums";
 import { Response } from "express";
 
 export class AppResponse {

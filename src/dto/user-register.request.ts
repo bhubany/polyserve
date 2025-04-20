@@ -1,4 +1,4 @@
-export type UserResponse = {
+export type UserRegisterRequest = {
   firstName: string;
   lastName: string;
   email: string;

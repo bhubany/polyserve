@@ -1,6 +1,6 @@
 import { ErrorCode } from "./enums";
 
-export type ID = string;
+export type USER_ID = string;
 
 export type ApiResponse<T> = {
   status: string;

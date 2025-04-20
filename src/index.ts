@@ -1,6 +1,9 @@
 import bodyParser from "body-parser";
+import "dotenv/config";
 import express, { Request, Response } from "express";
+import "module-alias/register";
 import "reflect-metadata";
+import "./config/di-container";
 import routes from "./routes";
 
 const app = express();
