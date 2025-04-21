@@ -1,5 +1,6 @@
 import { AppResponse } from "@//common/AppResponse";
 import { UserRegisterRequest } from "@//dto/user-register.request";
+import { Authorize } from "@/decorator/authorize.decorator";
 import { UserLoginRequest } from "@/dto/user-login.request";
 import { UserService } from "@/services/impl/user-service";
 import { Request, Response } from "express";
@@ -9,6 +10,7 @@ import { inject, injectable } from "tsyringe";
 export class AuthController {
   constructor(@inject(UserService) private userService: UserService) {}
 
+  @Authorize({ bypass: true })
   register = async (req: Request, res: Response): Promise<void> => {
     const requust: UserRegisterRequest = req.body;
     const user = await this.userService.register(requust);
