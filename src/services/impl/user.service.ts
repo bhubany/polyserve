@@ -14,10 +14,11 @@ export class UserService {
 
   async register(request: UserRegisterRequest): Promise<AuthResponse<USER_ID>> {
     const entity: User = {
-      name: `${request.firstName} ${request.lastName}`,
-      email: request.email,
+      name: `${request?.firstName} ${request?.lastName}`,
+      email: request?.email,
     };
-    const user = await this.repository.save(entity);
+    // const user = await this.repository.save(entity);
+    const user = entity;
     const res: AuthResponse<USER_ID> = {
       id: user?.id as USER_ID,
       email: user.email,

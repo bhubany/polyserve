@@ -4,8 +4,8 @@ import express from "express";
 import "module-alias/register";
 import "reflect-metadata";
 import "./config/di-container";
-import { authGuard } from "./middlewares/auth.guard";
 import routes from "./routes";
+import { authGuard } from "./security/middleware/auth.guard";
 
 const app = express();
 const port = process.env?.APP_PORT ?? 3000;

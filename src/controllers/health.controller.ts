@@ -1,5 +1,5 @@
 import { AppResponse } from "@//common/AppResponse";
-import { Authorize } from "@/decorator/authorize.decorator";
+import { Authorize } from "@/security/decorators/authorize.decorator";
 import { Request, Response } from "express";
 import { injectable } from "tsyringe";
 
@@ -8,17 +8,17 @@ export class HealthController {
   constructor() {}
 
   @Authorize({ bypass: true })
-  health = async (req: Request, res: Response): Promise<void> => {
+  async health(req: Request, res: Response): Promise<void> {
     AppResponse.success(res, "server is running");
-  };
+  }
 
   @Authorize({ bypass: true })
-  live = async (req: Request, res: Response): Promise<void> => {
+  async live(req: Request, res: Response): Promise<void> {
     res.status(200).send("I'm alive!");
-  };
+  }
 
   @Authorize({ bypass: true })
-  ready = async (req: Request, res: Response): Promise<void> => {
+  async ready(req: Request, res: Response): Promise<void> {
     // const dbReady = await checkDbConnection(); // Your DB ping logic
     const dbReady = true;
 
@@ -27,10 +27,10 @@ export class HealthController {
     } else {
       res.status(503).send("Not ready");
     }
-  };
+  }
 
   @Authorize({ bypass: true })
-  metrics = async (req: Request, res: Response): Promise<void> => {
+  async metrics(req: Request, res: Response): Promise<void> {
     const mem = process.memoryUsage();
     const uptime = process.uptime();
 
@@ -43,5 +43,5 @@ export class HealthController {
       uptime: `${Math.round(uptime)}s`,
       timestamp: new Date(),
     });
-  };
+  }
 }
